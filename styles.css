@@ -1,0 +1,208 @@
+
+:root{
+  --columns: 26;
+  --counter-span: calc(var(--columns) - 2);
+}
+
+*, *::after, *::before{
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body{
+  background: linear-gradient(90deg, rgba(102,38,111,1) 0%, rgba(0,0,0,1) 50%, rgba(102,38,111,1) 100%);
+  font-family: sans-serif;
+}
+
+.minefield{
+  display: grid;
+  grid-template-columns: repeat(var(--columns), minmax(22px, auto));
+  grid-auto-rows: minmax(22px, auto);
+  justify-content: center;
+  align-items: center;
+}
+
+.minefield div{
+  text-align: center;
+}
+
+.tile{
+  border: 1px solid pink;
+  width: 22px;
+  height: 22px;
+  background-color: black;
+  user-select: none;
+}
+
+.unrevealed:not(.flag):hover::before{
+  opacity: 0.5;
+}
+
+.unrevealed{
+  color: transparent;
+  position: relative;
+
+  animation-name: tile-popup;
+  animation-duration: 200ms;
+  animation-fill-mode: forwards;
+  transform: scale(0);
+}
+
+.unrevealed:hover{
+  cursor: pointer;
+}
+
+.unrevealed::before{
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  opacity: 0;
+  background-color: #ab41ba;
+  transition: opacity 200ms ease-in;
+}
+
+.revealed{
+  background-color: rgba(75, 0, 75, 0.8);
+  color: white;
+  animation-name: reveal;
+  animation-duration: 250ms;
+  animation-delay: 0ms !important;
+  animation-fill-mode: forwards;
+  transform: scale(0);
+}
+
+.counter{
+  color: #b04bbe;
+  margin-top: 10px;
+  animation-name: counter-fall;
+  animation-duration: 250ms;
+  animation-fill-mode: forwards;
+  opacity: 0;
+  transform: translateY(-50%);
+}
+
+.bomb-counter{
+  grid-column: span var(--counter-span);
+  justify-self: start;
+}
+
+.time-counter{
+  grid-column: span 2;
+}
+
+.time-counter::after{
+  margin-left: 0.5rem;
+  content: "s"
+}
+
+.bomb-counter::after{
+  margin-left: 0.5rem;
+  content: "Bombs"
+}
+
+.flag{
+  background-image: url("flag.png");
+}
+.disabled{
+  pointer-events: none;
+}
+
+.new-game-button{
+  position: relative;
+  grid-column: 1 / -1;
+  font-size: 1rem;
+  height: 2em;
+  margin: 0.75em 7em 0 7em;
+  outline: none;
+  border: 1px solid pink;
+  cursor: pointer;
+  border-radius: 0.5em;
+  transition: all 400ms ease-in;
+
+  transform: scale(0);
+  animation-name: tile-popup;
+  animation-duration: 400ms;
+  animation-fill-mode: forwards;
+}
+
+.new-game-button::after{
+  content: '';
+  position: absolute;
+  border-radius: 0.5em;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  transition: opacity 400ms ease-in;
+}
+
+.new-game-button:hover::after{
+  opacity: 1;
+}
+
+.new-game-button:hover{
+  box-shadow: inset 0 0 0.5em purple, 0 0 1em purple;
+  color: purple;
+}
+
+.new-game-button::before{
+  content: '';
+  position: absolute;
+  bottom: 0.5em;
+  width: 8.5ch;
+  height: 2px;
+  background-color: rgba(100, 0, 100, 0.5);
+  transform: scaleX(0);
+  transition: transform 400ms ease-in-out;
+}
+
+.new-game-button:hover::before{
+  transform: scaleX(1);
+}
+
+.title{
+  text-align: center;
+  padding: 1rem 0;
+  color: purple;
+}
+
+.high-score{
+  margin-top: 1em;
+  margin-left: 10%;
+  padding: 2em;
+  color: purple;
+  font-weight: bold;
+  font-size: 1.2em;
+  background-color: rgba(0, 0, 0, 0.7);
+  width: max-content;
+}
+
+@keyframes tile-popup {
+  80%{
+    transform: scale(1.2);
+  }
+  100%{
+    transform: scale(1);
+  }
+}
+
+@keyframes counter-fall {
+  100%{
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes reveal {
+  80%{
+    transform: scale(1.15);
+  }
+  100%{
+    transform: scale(1);
+  }
+}
