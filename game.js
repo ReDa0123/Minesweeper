@@ -65,13 +65,20 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function placeBombs(){
-    const shuffled = tiles.sort(() => 0.5 - Math.random())
+    const shuffled = shuffleArray(tiles)
     let selected = shuffled.slice(0, NUMBER_OF_BOMBS)
     selected.forEach((item) => {
       item.classList.add("bomb")
       item.appendChild(prepareBombImage()).style.display = "none"
     })
   }
+  
+  function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
 
   function placeNumbers(){
     tiles.forEach((item) => {
