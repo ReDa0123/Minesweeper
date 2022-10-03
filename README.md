@@ -1,7 +1,7 @@
 # Minesweeper
 A clasic game of minesweeper. 
 
-# Controles
+# Controls
 Left click to reveal a tile, right click to flag a tile, doudle left click on a number to reveal all others if you have the correct number of adjacent tiles flagged and right click on a number when you have the same number of adjacent unrevealed tiles to flag all of them.
 
 # Modification
